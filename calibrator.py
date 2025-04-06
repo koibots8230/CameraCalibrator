@@ -13,11 +13,11 @@ frameSize = (1280, 720)
 sizeOfBoardSquaresm = 0.03
 
 # Name of recording file
-cap = cv.VideoCapture("cam3.avi")
+cap = cv.VideoCapture("filename.avi")
 
-framesProcessed = 190 # Good rule of thumb: ~20 for a quick calibration, ~200 for compeition-ready calibration. Consider adding more if alot of frames have no checkerboard
+framesProcessed = 40 # Good rule of thumb: ~20 for a quick calibration, ~200 for compeition-ready calibration. Consider adding more if alot of frames have no checkerboard
 
-criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 30, 0.001)
+criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 100, 0.00001)
 
 objp = np.zeros((chessboardSize[0] * chessboardSize[1], 3), np.float32)
 objp[:,:2] = np.mgrid[0:chessboardSize[0],0:chessboardSize[1]].T.reshape(-1,2)
@@ -80,25 +80,28 @@ print("This should be between 0.1 and 1. If it is outside of that, gather new da
 
 print (
     f"""
-    Camera Matrix:
-    {cameraMatrix}
-
-    In the order of:
-    fx 0 cx
-    0 fy cy
-    0 0 1
-        
-    
-    
-    Distortion Coefficients:
-    {dist}
-
-    In the order of:
-    k1 k2 p1 p2 k3
+"Cam#" : \u007b
+    "id" : "IDHERE",
+    "matrix" : \u007b
+        "fx" : {cameraMatrix[0][0]},
+        "fy" : {cameraMatrix[1][1]},
+        "cx" : {cameraMatrix[0][2]},
+        "cy" : {cameraMatrix[1][2]}
+    \u007d, "distCoeffs": \u007b
+        "k1" : {dist[0][0]},
+        "k2" : {dist[0][1]},
+        "p1" : {dist[0][2]},
+        "p2" : {dist[0][3]},
+        "k3" : {dist[0][4]}
+    \u007d,
+    "frameWidth": 1280,
+    "frameHeight": 800,
+    "fps": 100
+\u007d
     """
 )
 
-input("Hit enter to close the window. Outputs have been written to outputs.txt. Make sure you record them before running again, new values WILL overwrite old ones.")
+input("Hit enter to close the window. Outputs will be written to outputs.txt. Make sure you record them before running again, new values WILL overwrite old ones.")
 
 f = open("output.txt", "w")
 f.write(

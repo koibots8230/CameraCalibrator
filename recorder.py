@@ -3,7 +3,7 @@ import cv2 as cv
 
 # Change to zero if no other camera is on your computer (this includes laptop cameras)
 # If there is another camera on your computer, keep at 1
-vid = cv.VideoCapture(1)
+vid = cv.VideoCapture(0, cv.CAP_DSHOW)
 
 # Configure this to your camera frame size
 # If this and the size entered in cameras.json differ, pose estimation WILL be innaccurate
@@ -20,7 +20,7 @@ size = (frame_width, frame_height)
 
 result = cv.VideoWriter(recordingName,  
                          cv.VideoWriter_fourcc(*'MJPG'), 
-                         100, size) 
+                         50, size) 
 
 print("Press S to stop recording")
 
@@ -29,8 +29,9 @@ while(True):
   
     if ret == True:  
         result.write(frame) 
-  
-        cv.imshow('Frame', frame) 
+
+        resize = cv.resize(frame, (1200, 900))
+        cv.imshow('Frame', resize) 
   
         # Press S on keyboard  
         # to stop the process 
