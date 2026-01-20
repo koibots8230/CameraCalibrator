@@ -1,5 +1,6 @@
 import numpy as np
 import cv2 as cv
+from cv2 import aruco
 import time
 
 # Number of inside corners on your checkerboard
@@ -14,6 +15,8 @@ sizeOfBoardSquaresm = 0.03
 
 # Name of recording file
 cap = cv.VideoCapture("filename.avi")
+
+aruco.detectMarkers()
 
 framesProcessed = 40 # Good rule of thumb: ~20 for a quick calibration, ~200 for compeition-ready calibration. Consider adding more if alot of frames have no checkerboard
 

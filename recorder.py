@@ -22,16 +22,21 @@ result = cv.VideoWriter(recordingName,
                          cv.VideoWriter_fourcc(*'MJPG'), 
                          50, size) 
 
+frame_per_frame = 10
+
 print("Press S to stop recording")
 
+count = 0
 while(True): 
     ret, frame = vid.read() 
+    count += 1
   
-    if ret == True:  
+    if ret == True and count == frame_per_frame:  
         result.write(frame) 
 
         resize = cv.resize(frame, (1200, 900))
-        cv.imshow('Frame', resize) 
+        cv.imshow('Frame', resize)
+        count = 0 
   
         # Press S on keyboard  
         # to stop the process 
